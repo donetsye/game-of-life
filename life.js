@@ -1,7 +1,8 @@
-const rows = 30;
-const cols = 30;
+const rows = 40;
+const cols = 40;
 const gridElement = document.getElementById('grid');
 let generation = 0;
+const density = 0.2;
 
 let interval = null;
 
@@ -52,8 +53,8 @@ function getCurrentState() {
 function setState(state) {
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
-        const checkbox = document.getElementById(`cell-${r}-${c}`);
-        checkbox.checked = state[r][c] == 1;
+            const checkbox = document.getElementById(`cell-${r}-${c}`);
+            checkbox.checked = state[r][c] == 1;
         }
     }
 }
@@ -69,8 +70,13 @@ function countNeighbors(state, x, y) {
         for (let vert = -1; vert <= 1; vert++) {
             if (horz === 0 && vert === 0) continue;  //the main cell for which we are counting neighbors
 
-            const newRow = x + horz;
-            const newCol = y + vert;
+            //const newRow = x + horz;
+            //const newCol = y + vert; -> for static border
+
+            //example: x is 0(first row), +(-1) horz, +30 rows = 29 (last row); 29 % 30 = 29(last row)   
+            // example2 if rows value is 10: x is 9(last row), + 1 (horz) + 10 rows = 20; 20 % 10 = 0 ('ll be the first row)
+            const newRow = (horz + x + rows) % rows;  
+            const newCol = (vert + y + cols) % cols;
             if(newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols){
                 count += state[newRow][newCol]
             }
@@ -134,7 +140,7 @@ function randomGrid() {
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           const checkbox = document.getElementById(`cell-${r}-${c}`);
-          checkbox.checked = Math.random() < 0.2; //how many of checkboxes will be checked, density
+          checkbox.checked = Math.random() < density; //how many of checkboxes will be checked, density
         }
     }
 }
