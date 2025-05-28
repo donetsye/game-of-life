@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Game of Life</title>
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <table id="grid"></table>
+    <div class="controls">
+        <button onclick="start()">Start</button>
+        <button onclick="stop()">Stop</button>
+        <button onclick="clearGrid()">Clear</button>
+        <button onclick="nextGeneration()">Next</button>
+        <button onclick="randomGrid()">Random</button>
+    </div>
+
+    <div class="results">
+        <span>Generation: <span id="generation">0</span></span>
+        <span>Alive Cells: <span id="alive">0</span></span>
+    </div>
+    
+
+    
+
+    <script src="life.js"></script>
+</body>
+</html>
